@@ -8,6 +8,8 @@ edit_uri: edit/main/docs/
 theme:
   name: material
   language: en
+  logo: assets/logo.svg          # IOTBTECH emblem, white — sits on the teal header bar
+  favicon: assets/favicon.svg    # IOTBTECH emblem, brand teal — browser tab icon
   features:
     - navigation.sections      # group the sidebar, don't make them hunt
     - navigation.top
@@ -22,15 +24,15 @@ theme:
   palette:
     - media: "(prefers-color-scheme: light)"
       scheme: default
-      primary: indigo
-      accent: indigo
+      primary: custom
+      accent: custom
       toggle:
         icon: material/weather-night
         name: Switch to dark mode
     - media: "(prefers-color-scheme: dark)"
       scheme: slate
-      primary: indigo
-      accent: indigo
+      primary: custom
+      accent: custom
       toggle:
         icon: material/weather-sunny
         name: Switch to light mode

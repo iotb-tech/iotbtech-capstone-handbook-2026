@@ -29,3 +29,8 @@
 
   a[href]::after { content: "" !important; }  /* don't print raw URLs */
 }
+
+@media print {
+  /* The wordmark identifies the sheet once it is printed and pinned up. */
+  .md-typeset img.iotb-wordmark { max-width: 170px !important; margin: 0 0 2mm !important; }
+}

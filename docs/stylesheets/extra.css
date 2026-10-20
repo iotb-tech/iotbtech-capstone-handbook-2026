@@ -13,3 +13,54 @@
 
 /* Collapsed reference blocks should read as secondary, not as warnings. */
 .md-typeset details.example > summary { font-weight: 600; }
+
+/* ===================================================================
+   IOTBTECH brand
+   Taken from the official logo (iotbtech.org.ng): teal #128484 and
+   goldenrod #DAA520.
+
+   Straight goldenrod only reaches 2.24:1 on white, well under the 4.5:1
+   needed for text, so the light theme uses a deepened gold (#9a6f09,
+   4.51:1) for interactive accents and keeps true goldenrod for dark mode,
+   where it measures 7.65:1. Same idea for teal in reverse: #128484 is
+   only 3.80:1 on the dark background, so links there lift to #1fb8b8.
+   =================================================================== */
+
+[data-md-color-primary="custom"] {
+  --md-primary-fg-color:        #128484;
+  --md-primary-fg-color--light: #17a2a2;
+  --md-primary-fg-color--dark:  #0d6464;
+  --md-primary-bg-color:        #ffffff;   /* white on teal = 4.51:1 */
+  --md-primary-bg-color--light: rgba(255, 255, 255, .7);
+}
+
+[data-md-color-accent="custom"] {
+  --md-accent-fg-color:             #9a6f09;
+  --md-accent-fg-color--transparent: rgba(154, 111, 9, .1);
+  --md-accent-bg-color:             #ffffff;
+}
+
+[data-md-color-scheme="default"] {
+  --md-typeset-a-color: #128484;
+}
+
+/* Dark mode: lift both brand colours to stay readable on the slate ground. */
+[data-md-color-scheme="slate"] {
+  --md-typeset-a-color:  #1fb8b8;
+  --md-accent-fg-color:  #daa520;
+  --md-accent-fg-color--transparent: rgba(218, 165, 32, .12);
+}
+
+/* Give the emblem a little breathing room from the site title. */
+.md-header__button.md-logo img,
+.md-header__button.md-logo svg { height: 1.6rem; width: 1.6rem; }
+
+/* Wordmark at the top of the printable one-pager.
+   Needs `.md-typeset img` specificity to beat Material's own max-width rule. */
+.md-typeset img.iotb-wordmark {
+  max-width: 300px;
+  width: 100%;
+  height: auto;
+  margin: 0 0 .6rem;
+  display: block;
+}

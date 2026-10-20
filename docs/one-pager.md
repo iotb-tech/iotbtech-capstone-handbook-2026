@@ -4,6 +4,8 @@ hide:
   - toc
 ---
 
+![IOTBTECH](assets/iotbtech-wordmark.svg){.iotb-wordmark}
+
 # Capstone — The Rules That Matter {.print-title}
 
 *IOTBTECH 2026 Full-Stack Capstone. Print this. Pin it. Full handbook:
