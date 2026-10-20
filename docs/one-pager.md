@@ -15,7 +15,7 @@ hide:
 
 | # | Rule |
 |---|---|
-| 1 | **Two repos per team.** `<project>-frontend` + `<project>-backend`. **No monorepos.** |
+| 1 | **Two repos per team**, named after the **product** not the team: `<product>-frontend` + `<product>-backend`. **No monorepos.** |
 | 2 | **Everything in the `iotb-tech` org.** Don't create your own org. Don't use a personal account. |
 | 3 | **Repos are private.** |
 | 4 | **Developers create and configure the repos** — not the mentor. |

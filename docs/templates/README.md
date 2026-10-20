@@ -26,11 +26,11 @@ Install order and the exact commands: [`../ops/repo-setup.md`](../ops/repo-setup
 
 ## After copying
 
-Search for and replace every placeholder — a shipped `<PROJECT>` or
+Search for and replace every placeholder — a shipped `<PRODUCT>` or
 `TECH_LEAD_USERNAME` is an easy thing for a reviewer to notice:
 
 ```bash
-grep -rn "<PROJECT>\|<REPO>\|<project>\|_USERNAME" . --exclude-dir=node_modules
+grep -rn "<PRODUCT>\|<REPO>\|<product>\|_USERNAME" . --exclude-dir=node_modules
 ```
 
 Then run `bash scripts/setup-hooks.sh` and verify the hook actually blocks a

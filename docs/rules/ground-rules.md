@@ -76,7 +76,19 @@ Unpicking costs a week.
 
 ## Ruling 1 — No monorepos
 
-**Two repositories per team.** `<project>-frontend` and `<project>-backend`.
+**Two repositories per team.** `<product>-frontend` and `<product>-backend`.
+
+**Name them after the product, not the team.** The repo is named for the thing
+you are building — `renttrack-backend`, not `team-alpha-backend` or
+`group-3-backend`. Your team name belongs in your README and on your slides; it
+does not belong in a URL. Two reasons: a repo outlives the team that built it
+and is read by people who have no idea who "Team Alpha" was, and these repos are
+your portfolio — a recruiter opening `renttrack-backend` immediately sees a
+product, while `group-3-backend` tells them nothing.
+
+If your repos are currently named after your team, that is a rename — which is
+an L4 decision, so **ask the mentor** ([matrix](#decision-authority-matrix)) and
+see [Fix this now](../fix-now.md).
 
 This is not a style preference, and it is not us being arbitrary. Here is the
 actual reasoning, because you should be able to defend it on Demo Day:
@@ -94,7 +106,7 @@ actual reasoning, because you should be able to defend it on Demo Day:
    one repo makes it far too easy to leak a database credential into a client
    bundle.
 5. **It is already the convention here.** All five teams' repos were created as
-   `<project>-frontend` / `<project>-backend`. The org has 20+ repos following
+   `<product>-frontend` / `<product>-backend`. The org has 20+ repos following
    it.
 
 Monorepos are a legitimate professional pattern — with tooling (Turborepo, Nx,
@@ -133,7 +145,7 @@ Do this before the remediation deadline:
    must accept it into `iotb-tech` — message them first so they are ready.)
 2. If the repos hold nothing worth keeping, do not transfer — just create fresh
    repos per [ops/repo-setup.md](../ops/repo-setup.md) and push your local code.
-3. Rename the transferred repos to `<project>-frontend` / `<project>-backend` if
+3. Rename the transferred repos to `<product>-frontend` / `<product>-backend` if
    they do not match.
 4. Confirm with the mentor that both repos are visible in `iotb-tech`.
 5. **Then delete the organisation** so nobody keeps pushing to it by accident.

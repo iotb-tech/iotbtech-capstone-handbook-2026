@@ -1,4 +1,4 @@
-# Contributing to <PROJECT>
+# Contributing to <PRODUCT>
 
 This is the team handbook for this repository. **Read it in full before your
 first push.**

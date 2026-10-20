@@ -53,10 +53,19 @@ Org default permission is `none`. Grant your team `Write` on the repo —
 [02, Step 6](ops/repo-setup.md#step-6--team-access). Role is `Write`, not
 `Admin`.
 
-**Can I rename the repo? Our project name changed.**
+**Should the repo be named after our team or our product?**
+The **product**. `renttrack-backend`, not `team-alpha-backend`. A repo outlives
+the team that built it and is read by people who have no idea who your team was
+— and it is your portfolio, so a recruiter should see a product, not a group
+number. Your team name goes in the README and on your slides.
+[Rename procedure](fix-now.md#if-your-repos-are-named-after-your-team).
+
+**Can I rename the repo? Our product name changed.**
 Ask the mentor first — a rename breaks everyone's remote and both deploy
 integrations. If approved, everyone runs
 `git remote set-url origin https://github.com/iotb-tech/<new-name>.git`.
+GitHub redirects the old URL for a while, so stale clones keep working just
+long enough for someone to forget — do it the same day.
 
 ---
 

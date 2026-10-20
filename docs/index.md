@@ -14,7 +14,7 @@ before asking.
 
 Break these and the project is marked down however good the app looks.
 
-1. **Two repos per team, never one.** `<project>-frontend` + `<project>-backend`. No monorepos. · [why](rules/ground-rules.md#ruling-1--no-monorepos)
+1. **Two repos per team, never one** — named after the **product**, not the team. `<product>-frontend` + `<product>-backend`. No monorepos. · [why](rules/ground-rules.md#ruling-1--no-monorepos)
 2. **Everything lives in the `iotb-tech` org.** Don't create your own. · [why](rules/ground-rules.md#ruling-2--no-new-github-organisations)
 3. **Repos are private.** · [setup](ops/repo-setup.md)
 4. **Developers create and configure the repos** — not the mentor. · [setup](ops/repo-setup.md)

@@ -217,7 +217,7 @@ assumptions about the same endpoint.
 
 **Order is fixed:**
 
-1. **Contract PR first** — in `<project>-backend`, update the contract
+1. **Contract PR first** — in `<product>-backend`, update the contract
    ([08](../building/api-contract.md)). Needs **1 FE + 1 BE approval**. Merge it.
 2. **Backend PR** — implement the endpoint to match. Deploy to staging.
 3. **Frontend PR** — wire it up, swapping the mock for the real call.

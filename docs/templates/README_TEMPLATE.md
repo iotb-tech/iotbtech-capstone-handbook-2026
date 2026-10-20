@@ -1,4 +1,4 @@
-# <PROJECT>
+# <PRODUCT>
 
 > One sentence: what this does and who for.
 
@@ -7,7 +7,7 @@
 | **Live** | <production URL> |
 | **Staging** | <staging URL> |
 | **API** | <api URL> · contract: `docs/api.md` |
-| **Companion repo** | [`<project>-backend`](https://github.com/iotb-tech/<project>-backend) |
+| **Companion repo** | [`<product>-backend`](https://github.com/iotb-tech/<product>-backend) |
 | **Board** | <project board link> |
 
 IOTBTECH 2026 Full-Stack Capstone.

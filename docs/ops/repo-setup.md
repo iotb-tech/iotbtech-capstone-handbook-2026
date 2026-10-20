@@ -17,19 +17,21 @@ so everyone sees it happen once.
 | Need | Detail |
 |---|---|
 | Org access | You must be a member of `iotb-tech`. If you cannot create a repo there, ask the mentor — do not create it elsewhere. |
-| Project name | Lowercase, one word if possible. `schoolpulse`, `locallink`, `renttrack`. Agree it as a team **first** — renaming later breaks everyone's remotes. |
+| **Product name** | The name of the **thing you are building**, not your team name. Lowercase, one word if possible: `schoolpulse`, `locallink`, `renttrack`. Agree it as a team **first** — renaming later breaks everyone's remotes and both deploy integrations. |
 | Who runs this | The Tech Lead, with the other devs watching. |
 
 ---
 
 ## Step 1 — Create the two repositories
 
-Names are fixed by convention:
+Names are fixed by convention — **the product name**, never the team name:
 
 ```
-<project>-frontend
-<project>-backend
+<product>-frontend
+<product>-backend
 ```
+
+`renttrack-frontend` ✅ · `team-alpha-frontend` ❌ · `group-3-frontend` ❌
 
 Both **private**. Both inside `iotb-tech` — check the owner dropdown says
 `iotb-tech`, not your username. This is the single most common mistake.
@@ -42,8 +44,8 @@ first push) -> Create.
 **Via the CLI** (faster, and worth learning):
 
 ```bash
-gh repo create iotb-tech/<project>-frontend --private --description "<project> web app — Next.js 15 (IOTBTECH 2026 capstone)"
-gh repo create iotb-tech/<project>-backend  --private --description "<project> API — Express + Prisma + PostgreSQL (IOTBTECH 2026 capstone)"
+gh repo create iotb-tech/<product>-frontend --private --description "<product> web app — Next.js 15 (IOTBTECH 2026 capstone)"
+gh repo create iotb-tech/<product>-backend  --private --description "<product> API — Express + Prisma + PostgreSQL (IOTBTECH 2026 capstone)"
 ```
 
 Write a real description. An empty description on five repos makes the org
@@ -69,20 +71,20 @@ does not.
 **Frontend** — git already exists, so just name the branch and push:
 
 ```bash
-cd <project>-frontend
+cd <product>-frontend
 git branch -M main                 # create-next-app may have used another name
-git remote add origin https://github.com/iotb-tech/<project>-frontend.git
+git remote add origin https://github.com/iotb-tech/<product>-frontend.git
 git push -u origin main
 ```
 
 **Backend** — no git yet, so initialise it:
 
 ```bash
-cd <project>-backend
+cd <product>-backend
 git init -b main
 git add .
 git commit -m "chore: scaffold project"
-git remote add origin https://github.com/iotb-tech/<project>-backend.git
+git remote add origin https://github.com/iotb-tech/<product>-backend.git
 git push -u origin main
 ```
 
@@ -118,7 +120,7 @@ What each is for — full workflow in [rules/git-workflow.md](../rules/git-workf
 ## Step 4 — Make `dev` the default branch
 
 ```bash
-gh repo edit iotb-tech/<project>-frontend --default-branch dev
+gh repo edit iotb-tech/<product>-frontend --default-branch dev
 ```
 
 Or: Settings -> General -> Default branch -> `dev`.
@@ -142,7 +144,7 @@ Settings -> General:
 Or via CLI:
 
 ```bash
-gh repo edit iotb-tech/<project>-frontend \
+gh repo edit iotb-tech/<product>-frontend \
   --enable-squash-merge --enable-merge-commit=false --enable-rebase-merge=false \
   --delete-branch-on-merge --enable-issues --enable-projects --enable-wiki=false
 ```
@@ -157,7 +159,7 @@ until access is granted.
 - Reuse your existing org team if you have one (`locallink-devs`,
   `renttrack-dev-and-cloud`, ...). Settings -> Collaborators and teams -> Add
   team -> role **Write**.
-- No team yet? **Ask the mentor to create one** — `<project>-team`. Do not add
+- No team yet? **Ask the mentor to create one** — `<product>-team`. Do not add
   people one by one as individual collaborators; a team is one place to manage
   access for both repos.
 
@@ -195,7 +197,7 @@ cp <handbook>/templates/README_TEMPLATE.md               README.md
 ```
 ///
 
-Fill in the `<PROJECT>`, `<TEAM>`, and `@username` placeholders in
+Fill in the `<PRODUCT>`, `<TEAM>`, and `@username` placeholders in
 `CONTRIBUTING.md`, `README.md`, and `REVIEWERS.md`. Commit on a branch and open
 a PR — your first PR should be this setup commit.
 

@@ -1,12 +1,12 @@
-# <PROJECT> — API Contract
+# <PRODUCT> — API Contract
 
 **Base URL**
 
 | Environment | URL |
 |---|---|
 | Local | `http://localhost:4000/api/v1` |
-| Staging | `https://<project>-api-staging.up.railway.app/api/v1` |
-| Production | `https://<project>-api.up.railway.app/api/v1` |
+| Staging | `https://<product>-api-staging.up.railway.app/api/v1` |
+| Production | `https://<product>-api.up.railway.app/api/v1` |
 
 **The contract changes before the code does.** A contract PR needs **one
 frontend and one backend approval**. See building/api-contract.md.

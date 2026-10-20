@@ -22,7 +22,17 @@ and team creation — ask for those early rather than on the deadline.
 
 Audited directly against the `iotb-tech` organisation.
 
-| Team | Repos | Visibility | Branches | What exists today |
+!!! note "These are repository names, not confirmed product names"
+    The rows below are labelled with whatever each repo is currently called.
+    We have not verified whether that is your **product** name or your **team**
+    name — and the rule is that repos are named after the **product**
+    ([why](rules/ground-rules.md#ruling-1--no-monorepos)).
+
+    **Check your row.** If the name is your product, nothing to do. If it is
+    your team name, it needs a rename — see
+    [If your repos are named after your team](#if-your-repos-are-named-after-your-team).
+
+| Repo name | Repos | Visibility | Branches | What exists today |
 |---|---|---|---|---|
 | **SchoolPulse** | `schoolpulse-frontend` / `-backend` | public | `main`, `dev`, `staging` + rulesets, `feature/<name>/<task>` | Furthest along. Next.js app; Express + Prisma + config/middleware; own workflow guide and `.env.example` |
 | **LocalLink** | `locallink-frontend` / `-backend` | private | `main`, `dev` | Strong hygiene: `CONTRIBUTING.md`, issue/PR templates, `pre-push` hook, shared `contract/` package, docker-compose |
@@ -47,13 +57,14 @@ than invent from scratch:
       Rules](rules/ground-rules.md) and the [Git
       Workflow](rules/git-workflow.md)** and confirmed it in the team channel
 - [ ] Both repos are **private**, in `iotb-tech`, named
-      `<project>-frontend` / `<project>-backend`
+      `<product>-frontend` / `<product>-backend` — after the **product**, not
+      the team ([rename procedure](#if-your-repos-are-named-after-your-team))
 - [ ] `main`, `dev`, `staging` all exist; default branch is `dev`
 - [ ] **Every developer has installed the `pre-push` hook on every clone**, and
       verified that `git checkout main && git push` is refused
 - [ ] `.github/` templates + both CI workflows committed
 - [ ] `CONTRIBUTING.md`, `README.md`, `REVIEWERS.md`, `.env.example` committed
-      and filled in (no `<PROJECT>` placeholders left)
+      and filled in (no `<PRODUCT>` placeholders left)
 - [ ] `.env` is in `.gitignore`, and `git log --all --oneline -- .env` returns
       nothing
 - [ ] Roles written into the README — who is Tech Lead, PM, UI/UX, DevOps, QA
@@ -187,15 +198,15 @@ Split it into two repos before the deadline.
 git subtree split --prefix=backend -b backend-only
 
 # create the new repo (ops/repo-setup.md Step 1), then:
-cd .. && mkdir <project>-backend && cd <project>-backend
+cd .. && mkdir <product>-backend && cd <product>-backend
 git init -b main
 git pull ../<monorepo> backend-only
-git remote add origin https://github.com/iotb-tech/<project>-backend.git
+git remote add origin https://github.com/iotb-tech/<product>-backend.git
 git push -u origin main
 ```
 
 Then remove `backend/` from the monorepo, rename the monorepo to
-`<project>-frontend`, and move the frontend files from `frontend/` up to the
+`<product>-frontend`, and move the frontend files from `frontend/` up to the
 repo root.
 
 **Option B — clean start** (fine if there is little history to lose):
@@ -219,6 +230,33 @@ Either way, afterwards:
 
 ---
 
+## If your repos are named after your team
+
+The convention is `<product>-frontend` / `<product>-backend` — named for what
+you are building, not who built it.
+
+A rename is an **L4 decision** and it breaks everyone's remotes, so do it once,
+deliberately, and tell the whole team the moment it is done.
+
+1. Agree the product name as a team. Lowercase, one word if you can.
+2. **Ask the mentor** to rename both repos (Settings → Repository name).
+3. Everyone updates their remote — this is the step people forget, and the
+   symptom is a push that silently goes nowhere:
+
+```bash
+git remote set-url origin https://github.com/iotb-tech/<product>-frontend.git
+git remote -v        # confirm both fetch and push point at the new name
+```
+
+4. Re-point Vercel and Railway at the renamed repos.
+5. Update the name in `README.md`, `CONTRIBUTING.md` and `.env.example`.
+
+GitHub redirects the old URL for a while, which is a trap: pushes appear to work
+from stale clones long enough for you to forget to fix them. Do step 3 the same
+day.
+
+---
+
 ## If your team created its own GitHub organisation
 
 Full procedure in
@@ -228,7 +266,7 @@ Full procedure in
 - [ ] Transfer both repos into `iotb-tech` (Settings -> Danger Zone -> Transfer
       ownership), or create fresh repos and push if there is nothing worth
       keeping
-- [ ] Rename to `<project>-frontend` / `<project>-backend`
+- [ ] Rename to `<product>-frontend` / `<product>-backend`
 - [ ] Set private, create branches, apply all templates
 - [ ] Confirm with the mentor that both repos are visible in `iotb-tech`
 - [ ] Re-point Vercel/Railway at the new repo locations

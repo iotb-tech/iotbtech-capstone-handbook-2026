@@ -14,7 +14,7 @@ Next.js 15, App Router, TypeScript, Tailwind. Exactly the stack from Classes
 From the folder where you keep projects (**not** inside another repo):
 
 ```bash
-npx create-next-app@latest <project>-frontend \
+npx create-next-app@latest <product>-frontend \
   --typescript --tailwind --eslint --app --src-dir \
   --import-alias "@/*" --use-npm
 ```
@@ -22,7 +22,7 @@ npx create-next-app@latest <project>-frontend \
 Then:
 
 ```bash
-cd <project>-frontend
+cd <product>-frontend
 npm run dev          # confirm http://localhost:3000 loads before you commit
 ```
 

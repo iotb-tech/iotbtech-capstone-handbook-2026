@@ -16,7 +16,7 @@ structure, with real domain logic in it.
     type: example
 
 ```bash
-mkdir <project>-backend && cd <project>-backend
+mkdir <product>-backend && cd <product>-backend
 npm init -y
 
 npm i express@5 cors helmet dotenv zod winston
@@ -147,7 +147,7 @@ Same shape as `hello-api` from Class 32–33. Do not invent your own.
     type: example
 
 ```
-<project>-backend/
+<product>-backend/
 ├── prisma/
 │   ├── schema.prisma
 │   ├── migrations/

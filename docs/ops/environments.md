@@ -77,7 +77,7 @@ Get these done before anyone needs them:
 
 ### Which variables exist
 
-Frontend (`<project>-frontend/.env.local`):
+Frontend (`<product>-frontend/.env.local`):
 
 ```bash
 NEXT_PUBLIC_API_URL=http://localhost:4000/api/v1    # public: it's just a URL
@@ -88,7 +88,7 @@ AUTH_GOOGLE_SECRET=                                  # SECRET
 NEXTAUTH_URL=http://localhost:3000
 ```
 
-Backend (`<project>-backend/.env`):
+Backend (`<product>-backend/.env`):
 
 ```bash
 NODE_ENV=development
@@ -137,7 +137,7 @@ delete your project's data.
 
 Vercel's Hobby tier deploys **private** GitHub repos — no upgrade needed.
 
-1. vercel.com -> Add New Project -> import `iotb-tech/<project>-frontend`
+1. vercel.com -> Add New Project -> import `iotb-tech/<product>-frontend`
    (authorise the `iotb-tech` org when prompted).
 2. Framework: Next.js (auto-detected). Root directory: repo root.
 3. Add env vars per environment:
@@ -160,7 +160,7 @@ what you already have.
 
 Railway:
 
-1. New Project -> Deploy from GitHub -> `iotb-tech/<project>-backend`.
+1. New Project -> Deploy from GitHub -> `iotb-tech/<product>-backend`.
 2. Add a **PostgreSQL** service -> it provides `DATABASE_URL` (reference it, do
    not copy-paste it).
 3. Build: `npm install && npm run build`. Start: `npm run start`.
