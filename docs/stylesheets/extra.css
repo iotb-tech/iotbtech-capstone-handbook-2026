@@ -1,0 +1,15 @@
+/* Wide tables scroll inside their own container rather than
+   pushing the page sideways on a phone. */
+.md-typeset__table { display: block; overflow-x: auto; }
+.md-typeset table:not([class]) { font-size: .76rem; }
+
+/* The orientation block under each H1 ("Read this if / Skip if"). */
+.md-typeset h1 + blockquote {
+  border-left: 4px solid var(--md-primary-fg-color);
+  background: var(--md-code-bg-color);
+  padding: .6rem .8rem;
+  font-size: .78rem;
+}
+
+/* Collapsed reference blocks should read as secondary, not as warnings. */
+.md-typeset details.example > summary { font-weight: 600; }

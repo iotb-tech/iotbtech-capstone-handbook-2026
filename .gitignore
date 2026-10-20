@@ -1,0 +1,8 @@
+# MkDocs build output
+site/
+
+# local preview venv
+.venv/
+__pycache__/
+
+.DS_Store

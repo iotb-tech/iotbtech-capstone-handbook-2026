@@ -1,0 +1,135 @@
+# IOTBTECH 2026 Capstone — auto-request reviewers
+#
+# WHY THIS EXISTS: CODEOWNERS does not work on private repositories in a
+# GitHub Free organisation — the file is inert and never requests a reviewer.
+# This workflow is the replacement that does work, because GitHub Actions
+# *do* run on private repos on the Free plan.
+#
+# Ownership lives in .github/reviewers.json. Keep it current, and keep it in
+# sync with REVIEWERS.md.
+
+name: Assign reviewers
+
+on:
+  pull_request:
+    types: [opened, ready_for_review]
+
+permissions:
+  pull-requests: write
+  contents: read
+
+jobs:
+  assign:
+    if: github.event.pull_request.draft == false
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+
+            const CONFIG = '.github/reviewers.json';
+            if (!fs.existsSync(CONFIG)) {
+              core.warning(CONFIG + ' not found — add it so reviewers get requested.');
+              return;
+            }
+            const config = JSON.parse(fs.readFileSync(CONFIG, 'utf8'));
+
+            const { owner, repo } = context.repo;
+            const pr = context.payload.pull_request;
+
+            // Files changed in this PR
+            const files = await github.paginate(
+              github.rest.pulls.listFiles,
+              { owner, repo, pull_number: pr.number, per_page: 100 },
+            );
+            const changed = files.map((f) => f.filename);
+
+            // Minimal glob matcher. Supports "**" (any depth) and "*"
+            // (within one path segment). Enough for an ownership map, and
+            // avoids pulling in a dependency.
+            const matches = (glob, filepath) => {
+              // Built left to right so "**" and "*" cannot interfere with
+              // each other or with escaping.
+              let re = '';
+              let i = 0;
+              while (i < glob.length) {
+                if (glob.startsWith('**/', i)) {
+                  re += '(?:.*/)?';          // any number of directories
+                  i += 3;
+                } else if (glob.startsWith('**', i)) {
+                  re += '.*';                // anything, including slashes
+                  i += 2;
+                } else if (glob[i] === '*') {
+                  re += '[^/]*';             // anything within one segment
+                  i += 1;
+                } else {
+                  const ch = glob[i];
+                  re += /[.+^${}()|[\]\\?]/.test(ch) ? '\\' + ch : ch;
+                  i += 1;
+                }
+              }
+              return new RegExp('^' + re + '$').test(filepath);
+            };
+
+            const selected = new Set();
+
+            for (const rule of config.rules || []) {
+              const paths = rule.paths || [];
+              const hit = changed.some((f) => paths.some((g) => matches(g, f)));
+              if (hit) {
+                for (const r of rule.reviewers || []) selected.add(r);
+              }
+            }
+
+            // Nothing matched a specific rule -> fall back to the defaults.
+            if (selected.size === 0) {
+              for (const r of config.default || []) selected.add(r);
+            }
+
+            // Never request a review from the author.
+            selected.delete(pr.user.login);
+
+            // Skip anyone who has already reviewed.
+            const existing = await github.paginate(
+              github.rest.pulls.listReviews,
+              { owner, repo, pull_number: pr.number, per_page: 100 },
+            );
+            for (const r of existing) {
+              if (r.user && r.user.login) selected.delete(r.user.login);
+            }
+
+            const reviewers = [...selected].filter(
+              (r) => r && !r.startsWith('_') && !/_USERNAME$/.test(r),
+            );
+
+            if (reviewers.length === 0) {
+              core.info('No reviewers to request. Have you filled in reviewers.json?');
+              return;
+            }
+
+            // One bad username fails the whole call, so request individually
+            // and report the ones that could not be added.
+            const failed = [];
+            for (const reviewer of reviewers) {
+              try {
+                await github.rest.pulls.requestReviewers({
+                  owner, repo, pull_number: pr.number, reviewers: [reviewer],
+                });
+              } catch (err) {
+                failed.push(reviewer + ' (' + err.message + ')');
+              }
+            }
+
+            const added = reviewers.filter(
+              (r) => !failed.some((f) => f.startsWith(r + ' (')),
+            );
+            if (added.length) core.info('Requested review from: ' + added.join(', '));
+            if (failed.length) {
+              core.warning(
+                'Could not request: ' + failed.join('; ') +
+                '. Check those usernames exist and are collaborators on this repo.',
+              );
+            }

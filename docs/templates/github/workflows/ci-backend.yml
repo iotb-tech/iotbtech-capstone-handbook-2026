@@ -1,0 +1,73 @@
+# IOTBTECH 2026 Capstone — backend CI
+#
+# Runs on every PR and on the long-lived branches. Spins up a real Postgres so
+# Prisma migrations are verified, not just the TypeScript build.
+#
+# NOTE: this cannot be a *required* check. Required status checks are part of
+# branch protection, which is not enforced on private repos in a GitHub Free
+# organisation (see 02_REPO_SETUP.md Step 8). The red X still appears on the
+# PR — so the rule is held by reviewers: DO NOT MERGE A RED PR.
+
+name: CI (backend)
+
+on:
+  pull_request:
+    branches: [dev, staging, main]
+  push:
+    branches: [dev, staging, main]
+
+concurrency:
+  group: ci-backend-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: ci_test
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    env:
+      DATABASE_URL: postgresql://postgres:postgres@localhost:5432/ci_test
+      NODE_ENV: development
+      PORT: "4000"
+      CORS_ORIGIN: http://localhost:3000
+      AUTH_SECRET: ci-only-placeholder-secret-at-least-32-chars
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Generate Prisma client
+        run: npx prisma generate
+
+      - name: Apply migrations
+        run: npx prisma migrate deploy
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Build
+        run: npm run build
+
+      # enable after Class 41 (Vitest / Playwright)
+      # - name: Unit tests
+      #   run: npm run test -- --run

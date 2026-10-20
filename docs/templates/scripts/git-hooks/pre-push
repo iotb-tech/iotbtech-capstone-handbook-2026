@@ -1,0 +1,49 @@
+#!/bin/sh
+#
+# IOTBTECH 2026 Capstone — pre-push hook
+#
+# Blocks direct pushes to the long-lived branches. All changes must arrive
+# by reviewed pull request.
+#
+# Install:  bash scripts/setup-hooks.sh        (macOS / Linux / Git Bash)
+#           .\scripts\setup-hooks.ps1          (Windows PowerShell)
+#
+# This is a CLIENT-SIDE hook. It lives in .git/hooks/, which is not
+# version-controlled, so every developer must install it on every clone.
+# Server-side enforcement (rulesets / branch protection) is unavailable:
+# the iotb-tech org is on the GitHub Free plan, where protection applies to
+# public repositories only. See 02_REPO_SETUP.md, Step 8.
+
+protected="main staging dev"
+current=$(git symbolic-ref --short HEAD 2>/dev/null)
+
+for branch in $protected; do
+  if [ "$current" = "$branch" ]; then
+    echo ""
+    echo "  ──────────────────────────────────────────────────────────────"
+    echo "   BLOCKED: direct push to '$branch' is not allowed."
+    echo "  ──────────────────────────────────────────────────────────────"
+    echo ""
+    echo "   Do this instead:"
+    echo ""
+    echo "     git checkout dev"
+    echo "     git pull origin dev"
+    echo "     git checkout -b feature/<yourname>/<short-task>"
+    echo "     git push -u origin feature/<yourname>/<short-task>"
+    echo "     gh pr create --base dev --fill"
+    echo ""
+    echo "   Already committed to '$branch' locally? Don't panic:"
+    echo ""
+    echo "     git branch feature/<yourname>/<short-task>   # save the work"
+    echo "     git reset --hard origin/$branch              # clean the branch"
+    echo "     git checkout feature/<yourname>/<short-task> # carry on"
+    echo ""
+    echo "   See 03_GIT_WORKFLOW.md. If you've already pushed to a"
+    echo "   protected branch from another machine, tell the Tech Lead now."
+    echo "   Nobody is in trouble for the mistake — only for hiding it."
+    echo ""
+    exit 1
+  fi
+done
+
+exit 0

@@ -1,0 +1,105 @@
+site_name: IOTBTECH 2026 Capstone Handbook
+site_description: Guidelines for the IOTBTECH 2026 full-stack capstone — repos, git workflow, roles, handoffs, build order, and standards.
+site_url: https://iotb-tech.github.io/iotbtech-capstone-handbook-2026/
+repo_url: https://github.com/iotb-tech/iotbtech-capstone-handbook-2026
+repo_name: iotb-tech/iotbtech-capstone-handbook-2026
+edit_uri: edit/main/docs/
+
+theme:
+  name: material
+  language: en
+  features:
+    - navigation.sections      # group the sidebar, don't make them hunt
+    - navigation.top
+    - navigation.tracking
+    - navigation.indexes
+    - toc.follow
+    - search.highlight
+    - search.suggest
+    - search.share
+    - content.code.copy        # students will copy-paste every command
+    - content.action.edit
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/weather-night
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to light mode
+  icon:
+    repo: fontawesome/brands/github
+
+# MkDocs excludes a top-level docs/templates/ by default (the name is reserved
+# for Jinja theme templates). Our scaffolding genuinely lives there, so
+# re-include it — user patterns are appended after the defaults, so this wins.
+exclude_docs: |
+  !/templates/
+
+extra_css:
+  - stylesheets/extra.css
+  - stylesheets/print.css
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - md_in_html
+  - tables
+  - footnotes
+  - pymdownx.blocks.details      # fence-style collapsibles: /// details | Title
+  - pymdownx.superfences
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.tabbed:
+      alternate_style: true
+  - toc:
+      permalink: true
+      toc_depth: 3
+      # GitHub-compatible heading anchors, so every #fragment link works both
+      # on the published site AND when reading the markdown on GitHub.
+      slugify: !!python/object/apply:pymdownx.slugs.slugify {kwds: {case: lower}}
+
+nav:
+  - Start here: index.md
+  - Fix this now: fix-now.md
+  - One-pager (print): one-pager.md
+  - Rules & Process:
+      - Ground rules & decisions: rules/ground-rules.md
+      - Git workflow: rules/git-workflow.md
+      - Roles & RACI: rules/roles.md
+      - Communication & handoffs: rules/communication.md
+  - Building:
+      - What to build now: building/build-order.md
+      - Frontend guide: building/frontend.md
+      - Backend guide: building/backend.md
+      - API contract: building/api-contract.md
+  - Setup & Ops:
+      - Repository setup: ops/repo-setup.md
+      - Environments & secrets: ops/environments.md
+  - Standards:
+      - Definition of done & rubric: standards/definition-of-done.md
+  - FAQ: faq.md
+  - Templates:
+      - Overview: templates/README.md
+      - CONTRIBUTING: templates/CONTRIBUTING.md
+      - Project README: templates/README_TEMPLATE.md
+      - Reviewers map: templates/REVIEWERS.md
+      - API contract: templates/API_CONTRACT_TEMPLATE.md
+      - Standup: templates/STANDUP_TEMPLATE.md
+      - Peer evaluation: templates/PEER_EVAL_TEMPLATE.md
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/iotb-tech

@@ -1,0 +1,51 @@
+# IOTBTECH 2026 Capstone — frontend CI
+#
+# Runs on every PR and on the long-lived branches.
+#
+# NOTE: this cannot be a *required* check. Required status checks are part of
+# branch protection, which is not enforced on private repos in a GitHub Free
+# organisation (see 02_REPO_SETUP.md Step 8). The red X still appears on the
+# PR — so the rule is held by reviewers: DO NOT MERGE A RED PR.
+
+name: CI (frontend)
+
+on:
+  pull_request:
+    branches: [dev, staging, main]
+  push:
+    branches: [dev, staging, main]
+
+concurrency:
+  group: ci-frontend-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Typecheck
+        run: npx tsc --noEmit
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Build
+        run: npm run build
+        env:
+          # Build-time placeholders only. Real values live in Vercel.
+          NEXT_PUBLIC_API_URL: http://localhost:4000/api/v1
+          NEXT_PUBLIC_USE_MOCKS: "true"
+
+      # enable after Class 41 (Vitest / Playwright)
+      # - name: Unit tests
+      #   run: npm run test -- --run

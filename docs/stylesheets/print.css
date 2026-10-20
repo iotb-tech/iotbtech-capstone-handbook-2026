@@ -1,0 +1,31 @@
+/* Print rules — tuned so the one-pager fits a single A4 sheet.
+   Produce the PDF with the browser's Save as PDF. */
+@media print {
+  .md-header, .md-sidebar, .md-footer,
+  .md-nav, .md-search, .md-top,
+  .md-content__button, .md-source { display: none !important; }
+
+  .md-main__inner, .md-content, .md-grid { margin: 0 !important; max-width: 100% !important; }
+
+  @page { size: A4; margin: 10mm; }
+
+  html, body, .md-typeset { font-size: 8.4pt !important; line-height: 1.32 !important; }
+
+  .md-typeset h1 { font-size: 15pt !important; margin: 0 0 .2em !important; }
+  .md-typeset h2 { font-size: 10pt !important; margin: .55em 0 .2em !important; page-break-after: avoid; }
+  .md-typeset p, .md-typeset ul, .md-typeset ol { margin: .25em 0 !important; }
+
+  .md-typeset table:not([class]) { font-size: 7.4pt !important; }
+  .md-typeset table:not([class]) th,
+  .md-typeset table:not([class]) td { padding: .18em .4em !important; }
+
+  .md-typeset pre, .md-typeset code { font-size: 7pt !important; }
+  .md-typeset pre > code { padding: .35em .5em !important; }
+
+  /* Expand every collapsed block so nothing is hidden on paper. */
+  .md-typeset details { display: block !important; }
+  .md-typeset details > summary { font-weight: 600; }
+  .md-typeset details[open] > *, .md-typeset details > * { display: revert !important; }
+
+  a[href]::after { content: "" !important; }  /* don't print raw URLs */
+}

@@ -1,0 +1,51 @@
+{
+  "_comment": [
+    "Ownership map for .github/workflows/assign-reviewers.yml.",
+    "This replaces CODEOWNERS, which is INERT on private repos in a Free org.",
+    "Usernames are GitHub logins WITHOUT the @, and must be collaborators on",
+    "this repository. Rules are additive: every matching rule contributes its",
+    "reviewers. If nothing matches, 'default' is used.",
+    "Replace every *_USERNAME placeholder — the workflow skips them.",
+    "Keep this in sync with REVIEWERS.md."
+  ],
+
+  "default": ["TECH_LEAD_USERNAME"],
+
+  "rules": [
+    {
+      "_why": "The contract crosses both repos: one frontend and one backend reviewer.",
+      "paths": ["src/contract/**", "docs/api.md", "API_CONTRACT.md"],
+      "reviewers": ["FRONTEND_DEV_USERNAME", "BACKEND_DEV_USERNAME"]
+    },
+    {
+      "_why": "Schema changes affect everyone's data.",
+      "paths": ["prisma/**"],
+      "reviewers": ["BACKEND_DEV_USERNAME", "TECH_LEAD_USERNAME"]
+    },
+    {
+      "_why": "Auth is security-critical - two pairs of eyes.",
+      "paths": [
+        "src/middlewares/auth.middleware.ts",
+        "src/lib/auth.ts",
+        "src/app/api/auth/**"
+      ],
+      "reviewers": ["TECH_LEAD_USERNAME", "BACKEND_DEV_USERNAME"]
+    },
+    {
+      "_why": "CI, hooks and deploy config belong to Cloud/DevOps.",
+      "paths": [
+        ".github/**",
+        "scripts/**",
+        "docker/**",
+        "Dockerfile",
+        "docker-compose.yaml"
+      ],
+      "reviewers": ["DEVOPS_USERNAME"]
+    },
+    {
+      "_why": "Shared UI components and tokens are used by every screen.",
+      "paths": ["src/components/ui/**", "tailwind.config.ts"],
+      "reviewers": ["FRONTEND_DEV_USERNAME"]
+    }
+  ]
+}
